@@ -431,7 +431,6 @@ func genMessageField(g *protogen.GeneratedFile, f *fileInfo, m *messageInfo, fie
 		field.Desc.Options().(*descriptorpb.FieldOptions).GetDeprecated())
 	g.P(leadingComments,
 		name, " ", goType, tags,
-		//trailingComment(field.Comments.Trailing))
 		trailingComment(leftTailing))
 	sf.append(field.GoName)
 }
