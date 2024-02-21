@@ -422,7 +422,7 @@ func genMessageField(g *protogen.GeneratedFile, f *fileInfo, m *messageInfo, fie
 	var leftTailing protogen.Comments
 	tags, leftTailing = AppendGoTagsFromTailingComment(tags, field.Comments.Trailing)
 
-	if strings.TrimSpace(string(leftTailing)) == "//" {
+	if strings.TrimSpace(string(leftTailing)) == "//\n" {
 		leftTailing = ""
 	}
 
