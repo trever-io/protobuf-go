@@ -422,6 +422,10 @@ func genMessageField(g *protogen.GeneratedFile, f *fileInfo, m *messageInfo, fie
 	var leftTailing protogen.Comments
 	tags, leftTailing = AppendGoTagsFromTailingComment(tags, field.Comments.Trailing)
 
+	if strings.TrimSpace(string(leftTailing)) == "//" {
+		leftTailing = ""
+	}
+
 	name := field.GoName
 	if field.Desc.IsWeak() {
 		name = genid.WeakFieldPrefix_goname + name
