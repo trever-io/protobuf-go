@@ -25,7 +25,7 @@ func fieldPqType(currentGoType string, currentPointer bool, tailComment protogen
 		return currentGoType, currentPointer, newTailing
 	}
 
-	newTailing = protogen.Comments(strings.Replace(string(tailComment), "@pg_type", "", 1))
+	newTailing = protogen.Comments(strings.Replace(string(tailComment), "@pq_type", "", 1))
 
 	switch currentGoType {
 	case "[]string":
