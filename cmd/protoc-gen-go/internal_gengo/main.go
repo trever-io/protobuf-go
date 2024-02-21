@@ -398,8 +398,10 @@ func genMessageField(g *protogen.GeneratedFile, f *fileInfo, m *messageInfo, fie
 		sf.append(oneof.GoName)
 		return
 	}
+
+	var leftTailing protogen.Comments
 	goType, pointer := fieldGoType(g, f, field)
-	goType, pointer = fieldPqType(goType, pointer, field.Comments.Trailing)
+	goType, pointer, leftTailing = fieldPqType(goType, pointer, field.Comments.Trailing)
 	if pointer {
 		goType = "*" + goType
 	}
@@ -419,8 +421,7 @@ func genMessageField(g *protogen.GeneratedFile, f *fileInfo, m *messageInfo, fie
 		tags = append(tags, gotrackTags...)
 	}
 
-	var leftTailing protogen.Comments
-	tags, leftTailing = AppendGoTagsFromTailingComment(tags, field.Comments.Trailing)
+	tags, leftTailing = AppendGoTagsFromTailingComment(tags, leftTailing)
 
 	name := field.GoName
 	if field.Desc.IsWeak() {
