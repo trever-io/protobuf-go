@@ -49,9 +49,6 @@ func AppendGoTagsFromTailingComment(
 	newTags structTags,
 	newTailing protogen.Comments,
 ) {
-	newTags = existsTags
-	newTailing = tailComment
-
 	tagsMap := map[string]string{} // key -> value
 	seqKeys := make([]string, 0)
 	for _, existTags := range existsTags {

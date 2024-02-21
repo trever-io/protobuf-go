@@ -399,6 +399,7 @@ func genMessageField(g *protogen.GeneratedFile, f *fileInfo, m *messageInfo, fie
 		return
 	}
 	goType, pointer := fieldGoType(g, f, field)
+	goType, pointer = fieldPqType(goType, pointer, field.Comments.Trailing)
 	if pointer {
 		goType = "*" + goType
 	}
