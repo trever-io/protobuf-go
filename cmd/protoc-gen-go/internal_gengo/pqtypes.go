@@ -3,6 +3,7 @@ package internal_gengo
 import (
 	"log"
 	"regexp"
+	"strings"
 
 	"google.golang.org/protobuf/compiler/protogen"
 )
@@ -17,15 +18,19 @@ func init() {
 	}
 }
 
-func fieldPqType(currentGoType string, currentPointer bool, tailComment protogen.Comments) (goType string, pointer bool) {
+func fieldPqType(currentGoType string, currentPointer bool, tailComment protogen.Comments) (goType string, pointer bool, newTailing protogen.Comments) {
+	newTailing = tailComment
+
 	if !commentPqTypesRe.MatchString(string(tailComment)) {
-		return currentGoType, currentPointer
+		return currentGoType, currentPointer, newTailing
 	}
+
+	newTailing = protogen.Comments(strings.Replace(string(tailComment), "@pg_type", "", 1))
 
 	switch currentGoType {
 	case "[]string":
-		return "pq.StringArray", false
+		return "pq.StringArray", false, newTailing
 	default:
-		return currentGoType, currentPointer
+		return currentGoType, currentPointer, newTailing
 	}
 }
